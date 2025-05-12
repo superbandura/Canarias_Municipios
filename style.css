@@ -1,0 +1,150 @@
+/* Estilos existentes (body, h1, map-container, #canary-map, etc.) ... */
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+    text-align: center; /* Centrar título */
+}
+
+/* --- NUEVOS ESTILOS PARA EL JUEGO --- */
+#game-controls {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#play-button {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+#play-button:disabled { /* Estilo cuando no se puede jugar */
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+
+#game-status {
+    font-style: italic;
+    color: #555;
+    min-height: 20px; /* Evitar saltos */
+}
+
+#municipality-display {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+#municipality-display p {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+#municipality-name {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+    font-weight: bold;
+}
+
+#score-display {
+     margin-top: 15px;
+     font-size: 1.2em;
+     font-weight: bold;
+     background-color: #e0f2f7;
+     padding: 8px 15px;
+     border-radius: 4px;
+}
+
+/* -------------------------------------- */
+
+.map-container {
+    width: 80%; /* O ajusta este porcentaje también si es necesario */
+    max-width: 800px; /* Incrementado desde 800px */
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: #e0f7fa;
+}
+
+#canary-map {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilo base y hover (modificado de antes) */
+#canary-map path[id] {
+    cursor: pointer;
+    transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
+    /* Los estilos base fill/stroke vienen del SVG inline */
+}
+
+/* ... otros estilos ... */
+
+/* Estilo hover (amarillo) - sin cambios */
+#canary-map path[id]:hover {
+    fill: #ffeb3b !important;
+    stroke: #f57f17 !important;
+    stroke-width: 2.5 !important;
+}
+
+/* Estilo SELECCIONADO MODO INFO (azul u otro color) */
+#canary-map path.selected-island {
+    fill: #42a5f5 !important; /* Azul claro o el color que prefieras */
+    stroke: #1e88e5 !important;
+    stroke-width: 3 !important;
+}
+
+/* Estilos feedback JUEGO (verde/rojo) - sin cambios */
+#canary-map path.correct-island {
+    fill: #66bb6a !important; /* Verde */
+    stroke: #388e3c !important;
+    stroke-width: 3 !important;
+}
+#canary-map path.incorrect-island {
+    fill: #ef5350 !important; /* Rojo */
+    stroke: #d32f2f !important;
+    stroke-width: 3 !important;
+}
+
+/* ... resto de estilos ... */
+
+/* ------------------------------------------ */
+
+
+/* Caja de información original (se usará menos) */
+#info-box {
+    width: 80%;
+    max-width: 800px;
+    min-height: 50px; /* Reducido si se usa menos */
+    padding: 15px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-top: 20px; /* Espacio arriba */
+}
+#info-box p:first-child { font-style: italic; color: #666; }
+#island-details p { margin: 8px 0; text-align: left; }
+#island-details strong { display: inline-block; width: 100px; }
+
+/* Clase genérica para ocultar elementos */
+.hidden {
+    display: none;
+}
