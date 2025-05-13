@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Geografía: Municipios Canarios</title>
+    <title>Juego de Geografía y Cultura: Canarias</title> <!-- Título actualizado -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Juego: ¿A qué isla pertenece este municipio?</h1>
+    <h1>Aprende sobre Canarias: Municipios y Cultura</h1> <!-- Título actualizado -->
 
     <!-- Controles y Estado del Juego -->
     <div id="game-controls">
-        <button id="play-button">¡Jugar!</button>
-        <div id="game-status">Pulsa Jugar para empezar.</div>
+        <button id="municipalities-button">Municipios</button> <!-- Botón renombrado y con nuevo ID -->
+        <button id="culture-button">Cultura</button>         <!-- Nuevo botón -->
+        <div id="game-status">Selecciona un modo de juego o clica una isla para ver su info.</div> <!-- Mensaje inicial actualizado -->
     </div>
 
-    <div id="municipality-display" class="hidden">
-        <p>Municipio:</p>
-        <h2 id="municipality-name">---</h2>
+    <div id="item-display" class="hidden"> <!-- ID cambiado para ser más genérico -->
+        <p id="item-type-label">---</p> <!-- Para "Municipio:" o "Pregunta:" -->
+        <h2 id="item-name-or-question">---</h2> <!-- Para el nombre del municipio o la pregunta -->
     </div>
 
     <!-- El Mapa -->
@@ -86,7 +87,7 @@
          Puntuación: <span id="score-points">0</span> / <span id="score-total-rounds">0</span>
     </div>
 
-    <!-- Caja de Información Original (la ocultaremos durante el juego) -->
+    <!-- Caja de Información Original -->
     <div id="info-box">
         <p>Información de la isla (aparece al terminar el juego o antes de empezar).</p>
         <div id="island-details" class="hidden">
