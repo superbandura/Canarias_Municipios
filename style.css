@@ -14,22 +14,36 @@ h1 {
 }
 
 /* --- NUEVOS ESTILOS PARA EL JUEGO --- */
+/* ... (estilos existentes) ... */
+
 #game-controls {
     margin-bottom: 15px;
     text-align: center;
 }
 
-#play-button {
+/* Ajustar botones si es necesario */
+#municipalities-button, #culture-button {
     padding: 10px 20px;
     font-size: 1.1em;
     cursor: pointer;
-    background-color: #4CAF50; /* Verde */
     color: white;
     border: none;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin: 0 5px 10px 5px; /* Añadido margen horizontal y mantenido el inferior */
 }
-#play-button:disabled { /* Estilo cuando no se puede jugar */
+
+#municipalities-button {
+    background-color: #4CAF50; /* Verde */
+}
+#municipalities-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#culture-button {
+    background-color: #2196F3; /* Azul, por ejemplo */
+}
+#culture-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
@@ -41,7 +55,8 @@ h1 {
     min-height: 20px; /* Evitar saltos */
 }
 
-#municipality-display {
+/* Renombrado de #municipality-display a #item-display */
+#item-display {
     margin-bottom: 15px;
     padding: 10px;
     background-color: #fff;
@@ -49,28 +64,21 @@ h1 {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     text-align: center;
     width: 80%;
-    max-width: 400px;
+    max-width: 600px; /* Podrías necesitar más ancho para preguntas largas */
 }
-#municipality-display p {
+#item-display p { /* Para #item-type-label */
     margin: 0 0 5px 0;
     font-size: 0.9em;
     color: #666;
 }
-#municipality-name {
+#item-name-or-question { /* Para el h2 */
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.3em; /* Un poco más pequeño si las preguntas son largas */
     color: #333;
     font-weight: bold;
 }
 
-#score-display {
-     margin-top: 15px;
-     font-size: 1.2em;
-     font-weight: bold;
-     background-color: #e0f2f7;
-     padding: 8px 15px;
-     border-radius: 4px;
-}
+/* ... (resto de estilos sin cambios significativos) ... */
 
 /* -------------------------------------- */
 
@@ -111,7 +119,7 @@ h1 {
     stroke-width: 3 !important;
 }
 
-/* Estilos feedback JUEGO (verde/rojo) - sin cambios */
+/* Estilos feedback JUEGO (verde/rojo) */
 #canary-map path.correct-island {
     fill: #66bb6a !important; /* Verde */
     stroke: #388e3c !important;
@@ -122,6 +130,25 @@ h1 {
     stroke: #d32f2f !important;
     stroke-width: 3 !important;
 }
+
+/* --- NUEVO ESTILO Y ANIMACIÓN PARA MOSTRAR LA ISLA CORRECTA AL FALLAR --- */
+@keyframes blink-red-feedback {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+#canary-map path.show-correct-answer-feedback {
+    fill: #ef5350 !important; /* Mismo rojo que incorrect-island */
+    stroke: #d32f2f !important; /* Mismo stroke que incorrect-island */
+    stroke-width: 3 !important;
+    animation: blink-red-feedback 0.7s infinite;
+}
+/* -------------------------------------------------------------------- */
+
 
 /* ... resto de estilos ... */
 
