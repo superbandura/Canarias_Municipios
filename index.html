@@ -14,6 +14,9 @@
     <div id="game-controls">
         <button id="municipalities-button">Municipios</button> <!-- Botón renombrado y con nuevo ID -->
         <button id="culture-button">Cultura</button>         <!-- Nuevo botón -->
+        <label id="timer-settings">Tiempo por ronda:
+            <input type="number" id="round-duration-input" min="1" value="10">
+        </label>
         <div id="game-status">Selecciona un modo de juego o clica una isla para ver su info.</div> <!-- Mensaje inicial actualizado -->
     </div>
 
@@ -77,6 +80,10 @@
     <!-- Puntuación (inicialmente oculta) -->
     <div id="score-display" class="hidden">
          Puntuación: <span id="score-points">0</span> / <span id="score-total-rounds">0</span>
+    </div>
+    <div id="timer-container" class="hidden">
+        <div id="timer-bar"></div>
+        <span id="timer-text">0</span>
     </div>
 
     <!-- Caja de Información Original -->
