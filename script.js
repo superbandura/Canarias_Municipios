@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const infoPopulation = document.getElementById('info-population');
     const infoBoxIntro = document.querySelector('#info-box p:first-child');
     const islandPaths = svgMap.querySelectorAll('path[id]');
+    const roundDurationInput = document.getElementById('round-duration-input');
+    const timerContainer = document.getElementById('timer-container');
+    const timerBar = document.getElementById('timer-bar');
+    const timerText = document.getElementById('timer-text');
 
     // --- Datos de Información de Islas (sin cambios) ---
     const islandData = {
@@ -44,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     const TOTAL_ROUNDS = 10;
+    const DEFAULT_ROUND_TIME = 10; // segundos
 
     // --- Estado Global ---
     let isPlaying = false;
@@ -52,6 +57,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentItem = null; // Renombrado de currentMunicipality
     let itemsPool = [];   // Renombrado de municipalitiesPool
     let timeoutId = null;
+    let roundTimer = null;
+    let roundDuration = DEFAULT_ROUND_TIME;
+    let timeLeft = roundDuration;
     let currentlySelectedPath = null;
     let currentGameMode = null; // 'municipalities' o 'culture'
 
@@ -104,6 +112,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    function updateTimerDisplay() {
+        const percentage = (timeLeft / roundDuration) * 100;
+        timerBar.style.width = percentage + '%';
+        timerText.textContent = timeLeft;
+    }
+
+    function handleTimeOut() {
+        if (!isPlaying) return;
+        setIslandClickable(false);
+        const correctPathElement = svgMap.querySelector(`#${currentItem.islandId}`);
+        if (correctPathElement) {
+            correctPathElement.classList.add('show-correct-answer-feedback');
+        }
+        gameStatus.textContent = `Tiempo agotado. La respuesta era ${getIslandNameById(currentItem.islandId)}.`;
+        updateScoreDisplay(parseInt(scoreTotalRoundsEl.textContent, 10));
+        timeoutId = setTimeout(nextRound, 1800);
+    }
+
+    function startRoundTimer() {
+        clearInterval(roundTimer);
+        timeLeft = roundDuration;
+        updateTimerDisplay();
+        timerContainer.classList.remove('hidden');
+        roundTimer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(roundTimer);
+                handleTimeOut();
+            } else {
+                updateTimerDisplay();
+            }
+        }, 1000);
+    }
+
    function startGame() {
         if (!currentGameMode) {
             console.error("Modo de juego no seleccionado.");
@@ -117,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         isPlaying = true;
         score = 0;
         roundsPlayed = 0;
+        roundDuration = parseInt(roundDurationInput.value, 10) || DEFAULT_ROUND_TIME;
         
         let sourceArray;
         if (currentGameMode === 'municipalities') {
@@ -192,6 +235,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             gameStatus.textContent = `Ronda ${roundsPlayed} de ${actualTotalRounds}. Haz clic en la isla correcta.`;
             updateScoreDisplay(actualTotalRounds);
             setIslandClickable(true);
+            startRoundTimer();
         }
     }
 
@@ -200,6 +244,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (timeoutId) {
             clearTimeout(timeoutId);
             timeoutId = null;
+        }
+        if (roundTimer) {
+            clearInterval(roundTimer);
+            roundTimer = null;
         }
         isPlaying = false;
         clearIslandStyles();
@@ -213,6 +261,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         municipalitiesButton.disabled = false;
         cultureButton.disabled = false;
+        timerContainer.classList.add('hidden');
         currentGameMode = null; // Resetear modo de juego
     }
 
@@ -231,6 +280,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (isPlaying) {
             if (!currentItem) return;
+
+            if (roundTimer) {
+                clearInterval(roundTimer);
+                roundTimer = null;
+            }
 
             const clickedIslandId = clickedPath.id;
             const isCorrect = (clickedIslandId === currentItem.islandId);
@@ -291,6 +345,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Inicialización UI ---
     itemDisplay.classList.add('hidden');
     scoreDisplay.classList.add('hidden');
+    timerContainer.classList.add('hidden');
     infoBox.classList.remove('hidden');
     displayIslandInfo(null);
     gameStatus.textContent = "Selecciona un modo de juego ('Municipios' o 'Cultura') o clica una isla para ver su info."; // Mensaje inicial actualizado

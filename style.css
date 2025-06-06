@@ -55,6 +55,43 @@ h1 {
     min-height: 20px; /* Evitar saltos */
 }
 
+#timer-settings {
+    margin-left: 10px;
+}
+#round-duration-input {
+    width: 60px;
+}
+#timer-container {
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+#timer-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ff9800;
+    transition: width 1s linear;
+}
+#timer-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
 /* Renombrado de #municipality-display a #item-display */
 #item-display {
     margin-bottom: 15px;
