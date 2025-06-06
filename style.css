@@ -48,6 +48,18 @@ h1 {
     cursor: not-allowed;
 }
 
+#category-selector {
+    margin: 10px 0;
+}
+#category-selector label {
+    margin-right: 8px;
+}
+#question-category {
+    margin-top: 5px;
+    font-style: italic;
+    color: #555;
+}
+
 
 #game-status {
     font-style: italic;
