@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const infoPopulation = document.getElementById('info-population');
     const infoBoxIntro = document.querySelector('#info-box p:first-child');
     const islandPaths = svgMap.querySelectorAll('path[id]');
+    const categoryCheckboxes = document.querySelectorAll('#category-selector input[type="checkbox"]');
+    const questionCategoryEl = document.getElementById('question-category');
 
     // --- Datos de Información de Islas (sin cambios) ---
     const islandData = {
@@ -117,14 +119,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         isPlaying = true;
         score = 0;
         roundsPlayed = 0;
+        questionCategoryEl.textContent = '';
         
         let sourceArray;
         if (currentGameMode === 'municipalities') {
             sourceArray = [...allMunicipalities];
             itemTypeLabelEl.textContent = "Municipio:";
+            questionCategoryEl.classList.add('hidden');
         } else if (currentGameMode === 'culture') {
-            sourceArray = [...allCulturalQuestions];
+            const selectedCategories = Array.from(categoryCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+            sourceArray = allCulturalQuestions.filter(q => selectedCategories.includes(q.category));
             itemTypeLabelEl.textContent = "Pregunta Cultural:";
+            questionCategoryEl.classList.remove('hidden');
         } else {
             console.error("Modo de juego desconocido:", currentGameMode);
             return;
@@ -185,8 +193,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (currentGameMode === 'municipalities') {
                 itemNameOrQuestionEl.textContent = currentItem.name;
+                questionCategoryEl.textContent = '';
             } else if (currentGameMode === 'culture') {
                 itemNameOrQuestionEl.textContent = currentItem.question;
+                questionCategoryEl.textContent = `Categoría: ${currentItem.category}`;
             }
             
             gameStatus.textContent = `Ronda ${roundsPlayed} de ${actualTotalRounds}. Haz clic en la isla correcta.`;
@@ -208,6 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const actualTotalRounds = parseInt(scoreTotalRoundsEl.textContent, 10);
         gameStatus.textContent = `${message} Tu puntuación final es ${score} de ${actualTotalRounds} en modo ${currentGameMode}. Selecciona un modo de juego o clica una isla para ver su info.`;
         itemDisplay.classList.add('hidden');
+        questionCategoryEl.classList.add('hidden');
         infoBox.classList.remove('hidden');
         displayIslandInfo(null);
 
@@ -291,6 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Inicialización UI ---
     itemDisplay.classList.add('hidden');
     scoreDisplay.classList.add('hidden');
+    questionCategoryEl.classList.add('hidden');
     infoBox.classList.remove('hidden');
     displayIslandInfo(null);
     gameStatus.textContent = "Selecciona un modo de juego ('Municipios' o 'Cultura') o clica una isla para ver su info."; // Mensaje inicial actualizado

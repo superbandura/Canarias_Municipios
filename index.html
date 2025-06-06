@@ -14,12 +14,20 @@
     <div id="game-controls">
         <button id="municipalities-button">Municipios</button> <!-- Botón renombrado y con nuevo ID -->
         <button id="culture-button">Cultura</button>         <!-- Nuevo botón -->
+        <div id="category-selector">
+            <label><input type="checkbox" value="Naturaleza" checked name="category"> Naturaleza</label>
+            <label><input type="checkbox" value="Historia" checked name="category"> Historia</label>
+            <label><input type="checkbox" value="Tradiciones" checked name="category"> Tradiciones</label>
+            <label><input type="checkbox" value="Gastronomía" checked name="category"> Gastronomía</label>
+            <label><input type="checkbox" value="Cultura" checked name="category"> Cultura</label>
+        </div>
         <div id="game-status">Selecciona un modo de juego o clica una isla para ver su info.</div> <!-- Mensaje inicial actualizado -->
     </div>
 
     <div id="item-display" class="hidden"> <!-- ID cambiado para ser más genérico -->
         <p id="item-type-label">---</p> <!-- Para "Municipio:" o "Pregunta:" -->
         <h2 id="item-name-or-question">---</h2> <!-- Para el nombre del municipio o la pregunta -->
+        <p id="question-category" class="hidden"></p>
     </div>
 
     <!-- El Mapa -->
