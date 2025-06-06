@@ -222,12 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function startGame() {
+   function startGame() {
         if (!currentGameMode) {
             console.error("Modo de juego no seleccionado.");
             return;
         }
         console.log(`Iniciando juego en modo: ${currentGameMode}...`);
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
         isPlaying = true;
         score = 0;
         roundsPlayed = 0;
@@ -311,6 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function endGame(message = "¡Juego terminado!") {
         console.log("Fin del juego.");
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+            timeoutId = null;
+        }
         isPlaying = false;
         clearIslandStyles();
         setIslandClickable(true);
